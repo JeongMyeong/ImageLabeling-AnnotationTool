@@ -8,7 +8,7 @@ print("Hello World")
 ```
 
 링크는 다음과 같이 작성할 수 있다.  
-[링크 이름](http://naver.com)  
+[깃 튜토리얼 링크(동빈나)](https://www.youtube.com/watch?v=MFJIOqxK6k8&t=303s)  
 순서 없는 목록은 다음과 같이 작성할 수 있따.
 * 깃 튜토리얼
   * 깃 Clone
