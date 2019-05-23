@@ -726,12 +726,12 @@ class Labeling(Frame):
 
         # self.photo = ImageTk.PhotoImage(Image.open(self.image_path).resize((int(self.user_width*self.wd/self.wd),int(self.user_height*self.hg/self.hg))))
         self.photo = ImageTk.PhotoImage(Image.open(self.image_path))
-        self.thumnail_photo = ImageTk.PhotoImage(Image.open(self.image_path).resize((700,500)))
+        self.thumbnail_photo = ImageTk.PhotoImage(Image.open(self.image_path).resize((700,500)))
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo, tags="main_image")
         self.canvas.place(x=180,y=0)
-        self.thumnailcanvas = Canvas(width=700, height=500)
-        self.thumnailcanvas.place(x=180+self.user_width+20, y=400)
-        self.thumnailcanvas.create_image(0, 0, anchor=tk.NW, image=self.thumnail_photo, tags='main_image')
+        self.thumbnailcanvas = Canvas(width=700, height=500)
+        self.thumbnailcanvas.place(x=180+self.user_width+20, y=400)
+        self.thumbnailcanvas.create_image(0, 0, anchor=tk.NW, image=self.thumbnail_photo, tags='main_image')
 
 
         hs = Scrollbar(root, orient=HORIZONTAL, command=self.canvas.xview)
