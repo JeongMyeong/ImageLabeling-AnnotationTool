@@ -30,26 +30,26 @@ class Labeling(Frame):
         ########
         select_btn = Button(text='folder', command=self.dirBtn_cmd ).place(x=0, y=0)#, command=self.dirBtn_cmd)  # 폴더선택
 
-        scrollbar = Scrollbar()  # 스크롤바
-        self.tree = ttk.Treeview(yscrollcommand=scrollbar.set)  # 파일목록
-        scrollbar.config(command=self.tree.yview)
-        self.tree.place(x=0, y=100, width=150, height=250)
-        scrollbar.place(x=150, y=100, height=250)
-        clear_btn = Button(text='clear', command=self.clearBtn_cmd).place(x=50, y=0)
-        save_btn = Button(text='save', command = self.saveBtn_cmd).place(x=70, y=50)
-        all_btn = Button(text='all', command=self.allBtn_cmd).place(x=0, y=75)
-        no_btn = Button(text='no', command=self.noBtn_cmd).place(x=20,y=75)
-        add_data = Button( text='AddData', command=self.addDataBtn_cmd).place(x=40,y=75)
-        deleteimg_btn = Button( text='deleteIMG', command=self.deleteimg).place(x=0,y=50)
-        label_btn = Button(text='label', command=self.modify_label).place(x=0, y=25)
-        type_btn = Button(text='type', command=self.modify_type).place(x=35, y=25)
+        scrollbar = Scrollbar()                                                      # 스크롤바
+        self.tree = ttk.Treeview(yscrollcommand=scrollbar.set)                       # 파일목록
+        scrollbar.config(command=self.tree.yview)                                    #스크롤바 config
+        self.tree.place(x=0, y=100, width=150, height=250)                           # 파일목록 위치설정
+        scrollbar.place(x=150, y=100, height=250)                                    # 스크롤바 위치설정
+        clear_btn = Button(text='clear', command=self.clearBtn_cmd).place(x=50, y=0) # Labeling 정보들 모두 초기화버튼
+        save_btn = Button(text='save', command = self.saveBtn_cmd).place(x=70, y=50) # 저장 버튼
+        all_btn = Button(text='all', command=self.allBtn_cmd).place(x=0, y=75)       # 모든 파일 리스트 목록 보기 버튼
+        no_btn = Button(text='no', command=self.noBtn_cmd).place(x=20,y=75)          # 아직 Labeling 되지 않은 파일 리스트 목록 보기 버튼
+        add_data = Button( text='AddData', command=self.addDataBtn_cmd).place(x=40,y=75) # 번호판이 두개일 때 Labeling 데이터 하나 더 추가하기 버튼
+        deleteimg_btn = Button( text='deleteIMG', command=self.deleteimg).place(x=0,y=50) # 쓸모없는 데이터일때 이미지 제거 버튼
+        label_btn = Button(text='label', command=self.modify_label).place(x=0, y=25)    # 번호판 문자Label 수정 버튼
+        type_btn = Button(text='type', command=self.modify_type).place(x=35, y=25)      # 번호판 Type 수정 버튼
 
-        lu_up_btn = Button(text='▲',command=self.lu_upBtn_cmd).place(x=22, y=500)
-        lu_down_btn = Button(text='▼',command=self.lu_downBtn_cmd).place(x=22, y=552)
-        lu_left_btn = Button(text='◀',command=self.lu_leftBtn_cmd).place(x=0, y=526)
-        lu_right_btn = Button(text='▶',command=self.lu_rightBtn_cmd).place(x=45, y=526)
+        lu_up_btn = Button(text='▲',command=self.lu_upBtn_cmd).place(x=22, y=500)      # Labeling 좌표 1픽셀 수정 (왼쪽 위 좌표에서 위로)
+        lu_down_btn = Button(text='▼',command=self.lu_downBtn_cmd).place(x=22, y=552)  # Labeling 좌표 1픽셀 수정 (왼쪽 위 좌표에서 아래로)
+        lu_left_btn = Button(text='◀',command=self.lu_leftBtn_cmd).place(x=0, y=526)   # Labeling 좌표 1픽셀 수정 (왼쪽 위 좌표에서 왼쪽으로)
+        lu_right_btn = Button(text='▶',command=self.lu_rightBtn_cmd).place(x=45, y=526)# Labeling 좌표 1픽셀 수정 (왼쪽 위 좌표에서 오른쪽으로)
 
-        ru_up_btn = Button(text='▲', command=self.ru_upBtn_cmd).place(x=91, y=500)
+        ru_up_btn = Button(text='▲', command=self.ru_upBtn_cmd).place(x=91, y=500)         #위와 동일.
         ru_down_btn = Button(text='▼', command=self.ru_downBtn_cmd).place(x=91, y=552)
         ru_left_btn = Button(text='◀', command=self.ru_leftBtn_cmd).place(x=68, y=526)
         ru_right_btn = Button(text='▶', command=self.ru_rightBtn_cmd).place(x=114, y=526)
@@ -64,24 +64,24 @@ class Labeling(Frame):
         ld_left_btn = Button(text='◀', command=self.ld_leftBtn_cmd).place(x=0, y=604)
         ld_right_btn = Button(text='▶', command=self.ld_rightBtn_cmd).place(x=45, y=604)
 
-        self.xytext = ttk.Label(text='0')
-        self.xytext.place(x=70, y=27)
-        self.label_info = Label(text="None")
-        self.label_info.place(x=0, y=self.user_height+15)
+        self.xytext = ttk.Label(text='0')                                                    # Canvas 위의 좌표 초기값.
+        self.xytext.place(x=70, y=27)                                                        # Canvas 위의 좌표 위치설정.
+        self.label_info = Label(text="None")                                                 # Labeliong 정보 초기값
+        self.label_info.place(x=0, y=self.user_height+15)                                    # Labeling 정보 위치 설정.
 
-        self.tree.bind("<Double-1>", self.OnDoubleClick)  # 트리에서 더블클릭
-        self.tree.bind("<Button-1>", self.clickontree)
-        self.cropcanvas = Canvas(width=700, height=500)  # 없는파일일때 처리 해야함
+        self.tree.bind("<Double-1>", self.OnDoubleClick)                                     # 트리에서 더블클릭
+        self.tree.bind("<Button-1>", self.clickontree)                                       # 트리에서 한 번 클릭.
+        self.cropcanvas = Canvas(width=700, height=500)                                      # 없는파일일때 처리 해야함
         self.cropcanvas.place(x=180+self.user_width+20, y=0)
 
-    def __init__(self):
+    def __init__(self):                                                     # 클래스 처음
         self.cnt=0
         Frame.__init__(self)
         # self.window = window
         self.pack()
         self.Create()
 
-    def lu_upBtn_cmd(self):
+    def lu_upBtn_cmd(self):                                                             # Labeling 좌표 1픽셀씩 수정 버튼
 
         car_idx=self.car_cnt-1
         self.xy[car_idx][1] -= 1
@@ -100,7 +100,7 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def lu_downBtn_cmd(self):
+    def lu_downBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
 
         car_idx=self.car_cnt-1
         self.xy[car_idx][1] += 1
@@ -119,7 +119,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def lu_leftBtn_cmd(self):
+
+    def lu_leftBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][0] -= 1
         self.canvas.delete(self.tag[car_idx][0])
@@ -137,7 +138,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def lu_rightBtn_cmd(self):
+
+    def lu_rightBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][0] += 1
         self.canvas.delete(self.tag[car_idx][0])
@@ -156,7 +158,7 @@ class Labeling(Frame):
         self.cropimageView()
         self.labelinfo_print()
 
-    def ru_upBtn_cmd(self):
+    def ru_upBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][3] -= 1
         self.canvas.delete(self.tag[car_idx][0])
@@ -174,7 +176,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def ru_downBtn_cmd(self):
+
+    def ru_downBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx = self.car_cnt - 1
         self.xy[car_idx][3] += 1
         self.canvas.delete(self.tag[car_idx][0])
@@ -194,7 +197,8 @@ class Labeling(Frame):
         self.labelinfo_print()
         self.cropimageView()
         self.labelinfo_print()
-    def ru_rightBtn_cmd(self):
+
+    def ru_rightBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][2] += 1
         self.canvas.delete(self.tag[car_idx][0])
@@ -212,7 +216,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def ru_leftBtn_cmd(self):
+
+    def ru_leftBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][2] -= 1
         self.canvas.delete(self.tag[car_idx][0])
@@ -229,7 +234,7 @@ class Labeling(Frame):
                                 fill="red", width=1, tags=self.tag[car_idx][1])
         self.labels[self.select_jpg] = self.xy
 
-    def rd_downBtn_cmd(self):
+    def rd_downBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][5] += 1
         self.canvas.delete(self.tag[car_idx][1])
@@ -247,7 +252,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def rd_upBtn_cmd(self):
+
+    def rd_upBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][5] -= 1
         self.canvas.delete(self.tag[car_idx][1])
@@ -265,7 +271,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def rd_rightBtn_cmd(self):
+
+    def rd_rightBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][4] += 1
         self.canvas.delete(self.tag[car_idx][1])
@@ -283,7 +290,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def rd_leftBtn_cmd(self):
+
+    def rd_leftBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][4] -= 1
         self.canvas.delete(self.tag[car_idx][1])
@@ -302,7 +310,7 @@ class Labeling(Frame):
         self.cropimageView()
         self.labelinfo_print()
 
-    def ld_downBtn_cmd(self):
+    def ld_downBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][7] += 1
         self.canvas.delete(self.tag[car_idx][2])
@@ -320,7 +328,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def ld_upBtn_cmd(self):
+
+    def ld_upBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][7] -= 1
         self.canvas.delete(self.tag[car_idx][2])
@@ -338,7 +347,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def ld_leftBtn_cmd(self):
+
+    def ld_leftBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][6] -= 1
         self.canvas.delete(self.tag[car_idx][2])
@@ -356,7 +366,8 @@ class Labeling(Frame):
         self.labels[self.select_jpg] = self.xy
         self.cropimageView()
         self.labelinfo_print()
-    def ld_rightBtn_cmd(self):
+
+    def ld_rightBtn_cmd(self):                                                            # Labeling 좌표 1픽셀씩 수정 버튼
         car_idx=self.car_cnt-1
         self.xy[car_idx][6] += 1
         self.canvas.delete(self.tag[car_idx][2])
@@ -375,22 +386,24 @@ class Labeling(Frame):
         self.cropimageView()
         self.labelinfo_print()
 
-
+    # Labeling 타입 수정 버튼
     def modify_type(self):
         self.car_type_dialog()
-        self.xy[self.car_cnt - 1][8]=self.c_type
-        self.labelinfo_print()
+        self.xy[self.car_cnt - 1][8]=self.c_type                                        # Labeling 타입을 수정해준다.
+        self.labelinfo_print()                                                          # Labeling 정보를 업데이트해준다,
 
+    # 번호판 문구 labeling 정보를 수정 버튼.
     def modify_label(self):
-        while True:
+        while True:                                                                     # Labeling 타입의 올바른 정보가 들어올때까지 반복.
             self.carnum_label = simpledialog.askstring("input", "Write num-label")
             if(self.carnum_label==''):
                 continue
             else:
                 break
-        self.xy[self.car_cnt-1][9]=self.carnum_label
-        self.labelinfo_print()
+        self.xy[self.car_cnt-1][9]=self.carnum_label                                      # Labeling 번호판 문구를 수정해준다.
+        self.labelinfo_print()                                                          # Labeling 정보를 업데이트해준다,
 
+    # 데이터를 로드하는 함수.
     def dataLoad(self):
         self.labels = dict()                                    # dictionary
 
@@ -415,13 +428,14 @@ class Labeling(Frame):
                         xy_li.append(one_data[xy])
                     self.labels[key].append(xy_li)
 
-    def dirBtn_cmd(self):  # 폴더선택 버튼명령
+    # 폴더선택 버튼명령
+    def dirBtn_cmd(self):
         select = Tk()
         select.dirName = filedialog.askdirectory()  # 경로 선택
-        self.dirpath=select.dirName  # 경로 설정
+        self.dirpath=select.dirName                 # 경로 설정
         directory = self.dirpath.split('/')[-1]
         self.savefname = '/'+directory+'_labels.txt'
-        self.images = glob.glob(self.dirpath + '/*.jpg')  # 경로에 있는 .jpg 파일들을 리스트에 담음
+        self.images = glob.glob(self.dirpath + '/*.jpg')            # 경로에 있는 .jpg 파일들을 리스트에 담음
         if (os.path.isfile(self.dirpath + self.savefname)==False):
             with open(self.dirpath + self.savefname, 'w') as f:
                 pass
@@ -430,25 +444,21 @@ class Labeling(Frame):
             self.tree.delete(i)
 
         for i in range(len(self.images)):
-            self.tree.insert("", "end", text=str(self.images[i][len(self.dirpath) + 1:]))  # 이미지의 경로를 따라 이름만 tree에 추가
-        select.withdraw()  # tk종료
+            self.tree.insert("", "end", text=str(self.images[i][len(self.dirpath) + 1:]))               # 이미지의 경로를 따라 이름만 tree에 추가
+        select.withdraw()                                                                               # tk종료
 
-    def allBtn_cmd(self):                           #파일 전체목록 보여주기
+    # 파일 전체목록 보여주기
+    def allBtn_cmd(self):
         self.images=self.original_images
-
-
-
         for i in self.tree.get_children():
             self.tree.delete(i)
-
         for i in range(len(self.images)):
             self.tree.insert("", "end", text=str(self.images[i][len(self.dirpath) + 1:]))  # 이미지의 경로를 따라 이름만 tree에 추가
 
-    def noBtn_cmd(self):                    #라벨링 안된 파일들만 보이기
-
+    # 라벨링 안된 파일들만 보이기
+    def noBtn_cmd(self):
         for i in self.tree.get_children():
             self.tree.delete(i)
-
         with open(self.dirpath + self.savefname, 'r') as f:
             all_data = f.read()
             all_data = all_data.split()
@@ -463,34 +473,33 @@ class Labeling(Frame):
                 cnt+=1
         self.images=tmp_images
 
-
     def click2(self,event):
         self.press = 'nonpress'
 
-
+    # 파일목록에서 한번만 클릭했을 때
     def clickontree(self,event):
         item = self.tree.identify('item', event.x, event.y)
         image_name = self.tree.item(item, "text")
         self.image_path = self.dirpath + '/' + image_name
         self.chk = 0
-        for i in self.images:
+        for i in self.images:                                                                           # 선택한 파일의 이름을 변수에 담아둔다.
             if i[len(self.dirpath) + 1:] == self.image_path[len(self.dirpath) + 1:]:
                 self.select_jpg = self.image_path[len(self.dirpath) + 1:]
                 break
             else:
                 self.chk = self.chk + 1
 
-    def click(self,event):  # 클릭했을때 커맨드
+    # Canvas 위에서 클릭했을때 커맨드
+    def click(self,event):
         self.press = 'press'
-        if self.car_cnt == 0:               #만약 차량의 개수가 0개이면
-            self.car_cnt += 1
+        if self.car_cnt == 0:               # 만약 차량의 개수가 0개이면
+            self.car_cnt += 1               # 차량 개수를 +1
             self.addTag(self.car_cnt)
 
-        if(len(self.xy[self.car_cnt-1])<7):
+        if(len(self.xy[self.car_cnt-1])<7):                                         # Labeling이 안되어있으면 좌표를 저장.
             self.xy[self.car_cnt-1].append(int(self.canvas.canvasx(event.x)))
             self.xy[self.car_cnt-1].append(int(self.canvas.canvasy(event.y)))
             if len(self.xy[self.car_cnt-1]) == 8:
-
                 self.press = 'nonpress'
                 self.canvas.create_line(self.xy[self.car_cnt - 1][6], self.xy[self.car_cnt - 1][7],self.xy[self.car_cnt - 1][0], self.xy[self.car_cnt - 1][1], fill="red", width=1,tags=self.tag[self.car_cnt - 1][3])
                 self.car_type_dialog()
@@ -500,17 +509,21 @@ class Labeling(Frame):
                 self.labelinfo_print()
                 self.cropimageView()
 
+    # Canvas 이미지에서 더블클리개 했을 때
     def imageOnDoubleClick(self,event):
-        self.labelinfo_print()
-        self.saveBtn_cmd()
+        self.labelinfo_print()                                  # Labeling 정보를 업데이트.
+        self.saveBtn_cmd()                                      # 저장.
 
+
+    # 이미지 파일을 삭제하는 버튼 명령
     def deleteimg(self):
         os.remove(self.dirpath + '/' + self.select_jpg)
         print(self.dirpath + '/' + self.select_jpg)
 
+    # 트리뷰에서 더블클릭했을 때
     def OnDoubleClick(self, event):
         self.xy = [[]]
-        item = self.tree.identify('item', event.x, event.y)
+        item = self.tree.identify('item', event.x, event.y)                             # 선택한 파일의 경로를 저장하고
         image_name = self.tree.item(item, "text")
         self.image_path = self.dirpath + '/' + image_name
         self.chk = 0
@@ -521,8 +534,9 @@ class Labeling(Frame):
             else:
                 self.chk = self.chk + 1
         self.clear()
-        self.viewImage()
+        self.viewImage()                                                                # 선택한 파일의 결로대로 이미지를 띄워준다.
 
+    # 차량이 두개 있을때 Labeling 데이터 추가 버튼.
     def addDataBtn_cmd(self):
         if(len(self.xy[self.car_cnt-1])<8):           #만약 추가하고 안 그렸을때 처리
             print('First, draw Line')
@@ -531,6 +545,8 @@ class Labeling(Frame):
             self.addTag(self.car_cnt)
             self.xy.append([])
 
+
+    # Canvas를 그리기위한 Tag 생성 함수.
     def addTag(self,cnt):
         self.tag=[]
         for i in range(cnt):
@@ -539,10 +555,15 @@ class Labeling(Frame):
                 tmptag.append('line' + str(i)+str(k))
             self.tag.append(tmptag)
 
+
+    # 정보들을 초기화.
     def clearBtn_cmd(self):
         self.save='yes'
         self.clear()
 
+
+
+    # 정보들 초기화 하는 함수,
     def clear(self):
 
         for i in range(self.car_cnt):
@@ -551,7 +572,7 @@ class Labeling(Frame):
         self.xy=[[]]
         self.car_cnt = 0
 
-
+    # 저장 버튼.
     def saveBtn_cmd(self):
         output_li = []
         origin_xy=[]
@@ -563,16 +584,6 @@ class Labeling(Frame):
                 tmp_li.append(self.xy[i][k])
             origin_xy.append(tmp_li)
 
-        # for i in self.xy:
-        #     for k in range(len(i)):
-        #         if (k==8 or k==9):
-        #             continue
-        #         if k % 2 == 0:
-        #             i[k] = i[k]           #좌표를 저장할때는 해상도를 다시 원래 해상도로 되돌림
-        #         else:
-        #             i[k] = i[k]
-
-        # print(self.car_cnt)
         for i in range(self.car_cnt):
             output_li.append(self.image_path[len(self.dirpath) + 1:])       #txt파일에 저장할 output 문자열을 만듦
             if (len(self.xy[i])==9 or len(self.xy[i])==10):
@@ -618,7 +629,8 @@ class Labeling(Frame):
         else:
             messagebox.showinfo("Error", "Don't Save")
 
-    def MsgMotion(self,event):                  #사진위에서 마우스 올라갔을때 커맨드
+    # 사진위에서 마우스 올라갔을때 커맨드
+    def MsgMotion(self,event):
         self.x, self.y = int(self.canvas.canvasx(event.x)), int(self.canvas.canvasy(event.y))  # 스크롤 했을때 상대적인 값.
         self.xytext.config(text=str(self.x) + ',' + str(self.y))                      # 위치값 수정
         self.draw()
@@ -640,7 +652,7 @@ class Labeling(Frame):
                 if(sel_car != -1):
                     a, b, c, d = distance_tmp[sel_car]
 
-                if min(a, b, c, d)<=10:
+                if min(a, b, c, d)<=10:                                                 # 마우스에서 제일 가까운 부분을 연산.
                     if (min(a, b, c, d) == a):
                         self.canvas.delete(self.tag[sel_car][0])
                         self.canvas.create_line(self.x, self.y, self.xy[sel_car][2], self.xy[sel_car][3],fill="red", width=1,tags=self.tag[sel_car][0])
@@ -669,13 +681,11 @@ class Labeling(Frame):
                 self.cropimageView()
                 self.labelinfo_print()
 
-
-
+    # Canvas 위에 labeling 할 정보를 선으로 출력.
     def draw(self):
         self.cnt=0
         car_idx=self.car_cnt-1
         self.cnt = len(self.xy[car_idx])
-        # print("self.xy = {}".format(self.xy))
         for i in [2,4,6]:
             if self.cnt==i:
                 self.canvas.create_line(self.xy[car_idx][i-2],
@@ -695,10 +705,9 @@ class Labeling(Frame):
                                     self.xy[car_idx][1],
                                     fill="red", width=1,tags=self.tag[car_idx][3])
 
-
-
+    # 이미 Labeling 된 정보가 있을때 그 정보를 로드하여 Canvas에 좌표대로 그려줌.
     def LoadDrawLine(self):
-        self.car_cnt = len(self.labels[self.select_jpg])        #선택한 사진의 라벨링된 차 갯수
+        self.car_cnt = len(self.labels[self.select_jpg])        # 선택한 사진의 라벨링된 차 갯수
         loadxy = self.labels[self.select_jpg]
         index_li = [[0, 1, 2, 3, 0], [2, 3, 4, 5, 1], [4, 5, 6, 7, 2], [6, 7, 0, 1, 3]]
         if self.car_cnt > 0:
@@ -711,7 +720,8 @@ class Labeling(Frame):
                         self.xy[num].append(loadxy[num][i])
                 self.xy.append([])
 
-    def viewImage(self):  # 이미지를 띄우는 명령
+    # 이미지를 띄우는 명령
+    def viewImage(self):
         self.press = 'nonpress'
         self.test +=1
         self.car_cnt = 0
@@ -722,28 +732,26 @@ class Labeling(Frame):
         except: pass
         self.wd, self.hg = Image.open(self.image_path).size                                                            #사진 해상도
         self.dataLoad()
-        self.canvas = Canvas(width=self.user_width,height=self.user_height,scrollregion=(0, 0, self.wd, self.hg))                                             #없는파일일때 처리 해야함
-
-        # self.photo = ImageTk.PhotoImage(Image.open(self.image_path).resize((int(self.user_width*self.wd/self.wd),int(self.user_height*self.hg/self.hg))))
+        self.canvas = Canvas(width=self.user_width,height=self.user_height,scrollregion=(0, 0, self.wd, self.hg))                   # Canvas에 파일의 정보들을 준다.
         self.photo = ImageTk.PhotoImage(Image.open(self.image_path))
-        self.thumbnail_photo = ImageTk.PhotoImage(Image.open(self.image_path).resize((700,500)))
-        self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo, tags="main_image")
-        self.canvas.place(x=180,y=0)
+        self.thumbnail_photo = ImageTk.PhotoImage(Image.open(self.image_path).resize((700,500)))                                    # Thumnail.
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo, tags="main_image")                                           # 파일의 정보대로 Canvas에 그린다.
+        self.canvas.place(x=180,y=0)                                                                                                # Canvas 위치 설정.
         self.thumbnailcanvas = Canvas(width=700, height=500)
-        self.thumbnailcanvas.place(x=180+self.user_width+20, y=400)
-        self.thumbnailcanvas.create_image(0, 0, anchor=tk.NW, image=self.thumbnail_photo, tags='main_image')
+        self.thumbnailcanvas.place(x=180+self.user_width+20, y=400)                                                                 # Thumnail 위치 설정.
+        self.thumbnailcanvas.create_image(0, 0, anchor=tk.NW, image=self.thumbnail_photo, tags='main_image')                        # Thumnail 정보를 Canvas에 그린다.
 
 
-        hs = Scrollbar(root, orient=HORIZONTAL, command=self.canvas.xview)
-        hs.place(x=180, y=self.user_height, width= self.user_width)
-        vs = Scrollbar(root, orient=VERTICAL, command=self.canvas.yview)
-        vs.place(x=180+self.user_width,y=0,height=self.user_height)
-        self.canvas.configure(xscrollcommand=hs.set, yscrollcommand=vs.set)
+        hs = Scrollbar(root, orient=HORIZONTAL, command=self.canvas.xview)                                                          # Canvas에 스크롤 기능
+        hs.place(x=180, y=self.user_height, width= self.user_width)                                                                 # Canvas에 스크롤 기능
+        vs = Scrollbar(root, orient=VERTICAL, command=self.canvas.yview)                                                            # Canvas에 스크롤 기능
+        vs.place(x=180+self.user_width,y=0,height=self.user_height)                                                                 # Canvas에 스크롤 기능
+        self.canvas.configure(xscrollcommand=hs.set, yscrollcommand=vs.set)                                                         # Canvas에 스크롤 기능
 
-        self.canvas.bind("<Button-1>", self.click)
-        self.canvas.bind('<ButtonRelease-1>', self.click2)
-        self.canvas.bind("<Motion>", self.MsgMotion)
-        self.canvas.bind("<Double-1>", self.imageOnDoubleClick)
+        self.canvas.bind("<Button-1>", self.click)                                                                                  # Canvas 위에서 사용될 마우스 옵션들을 부여.
+        self.canvas.bind('<ButtonRelease-1>', self.click2)                                                                          # Canvas 위에서 사용될 마우스 옵션들을 부여.
+        self.canvas.bind("<Motion>", self.MsgMotion)                                                                                # Canvas 위에서 사용될 마우스 옵션들을 부여.
+        self.canvas.bind("<Double-1>", self.imageOnDoubleClick)                                                                     # Canvas 위에서 사용될 마우스 옵션들을 부여.
 
         self.LoadDrawLine()
         self.cropimageView()
@@ -751,13 +759,11 @@ class Labeling(Frame):
         self.labelinfo_print()
 
 
-
+    # Labeling 된 좌표쪽 정보만 보여주는 CropImageView.
     def cropimageView(self):
         self.labels[self.select_jpg] = self.xy
         self.cropimgli = []
         start_y = 0                                                                         # CROP 된 사진들 이어붙이기 위해서 시작부분 조절
-        # self.canvas.delete('carcrop')
-        # print(self.labels)
         for car in range(self.car_cnt):
             crop_beforeimg = Image.open(self.image_path)
             li = self.labels[self.select_jpg][car]
@@ -768,21 +774,22 @@ class Labeling(Frame):
             self.cropimgli.append(crop_img)
             self.cropcanvas.create_image(0, start_y, anchor=tk.NW, image=self.cropimgli[car], tags='carcrop')
             start_y += max(y) - min(y)
-    #트리 위에서 키보드 제어
+
+    # 트리 위에서 키보드 제어
     def key(self,event):
-        if event.keysym == 'Down':          # 키보드 아래키
+        if event.keysym == 'Down':               # 키보드 아래키
             self.chk = self.chk + 1
             self.image_path = self.dirpath + '/' + self.images[self.chk][len(self.dirpath)+1:]
-        if event.keysym == 'Up':            # 키보드 윗키
+        if event.keysym == 'Up':                  # 키보드 윗키
             self.chk = self.chk - 1
             self.image_path = self.dirpath + '/' + self.images[self.chk][len(self.dirpath) + 1:]
         self.select_jpg = self.images[self.chk][len(self.dirpath) + 1:]
-        if event.keysym == 'Return':        # 엔터 키
+        if event.keysym == 'Return':               # 엔터 키
             self.xy=[[]]
             self.car_cnt = 0
             self.viewImage()
 
-    #점과 점사이 거리
+    # 점과 점사이 거리 계산 함수
     def xydistance(self,x,y):
         distance = math.sqrt(pow(int(x[0])-int(y[0]),2)+pow((int(x[1])-int(y[1])),2))
         return distance
@@ -795,6 +802,9 @@ class Labeling(Frame):
                 continue
             else:
                 break
+
+
+    # 자동차 Type을 적는 Dialog
     def carnum_label_dialog(self):
         while True:
             self.carnum_label = simpledialog.askstring("input", "Write num-label")
